@@ -1,0 +1,15 @@
+{
+  "token": "",
+  "prefix": "rc.",
+  "author": "thatpaple#9995",
+  "allowedRole" : "",
+  "serverID": "",
+  "clientID": "",
+  "recapChannelID" : "",
+  "modlogChannelID" : "",
+  "liveChannel" : "",
+  "colors": {
+    "default": "7289DA",
+    "error": "F04030"
+  }
+}
