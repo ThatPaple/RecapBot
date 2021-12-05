@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { prefix, colors } = require('./../utils/config.json');
+const { prefix, colors, permissionLevels } = require('./../utils/config.json');
 const embedColor = colors.default;
 
 module.exports = {
@@ -10,6 +10,7 @@ module.exports = {
 	args: false,
 	usage: '[command name]',
 	execute: async (message, args, client) => {
+		if (message.member.roles.cache.has(`${permissionLevels.moderator}`) || message.member.roles.cache.has(`${permissionLevels.testing}`)) {
 	
 			const { commands } = message.client;
 
@@ -61,6 +62,6 @@ module.exports = {
 			}
 
 			return message.channel.send({ embeds: [cmdHelpEmbed] });
-		
+		}
 	},
 };

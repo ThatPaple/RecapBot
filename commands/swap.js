@@ -4,17 +4,18 @@ const currentRecap = "data/currentRecap.csv";
 const { colors, permissionLevels } = require('../utils/config.json');
 var parse = require('csv-parse');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+// const { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } = require('constants');
 
 module.exports = {
-    name: 'edit',
-    description: 'Edit recap entries',
+    name: 'swap',
+    description: 'Swap recap positions',
     aliases: [],
     guildOnly: false,
     args: false,
     argList: [''],
-    usage: '[ID] <link> [new entry OR link]',
+    usage: '[ID] [ID]',
     execute: (message, args, client) => {
-        if (message.member.roles.cache.has(`${permissionLevels.moderator}`) || message.member.roles.cache.has(`${permissionLevels.testing}`)) {
+        if (message.member.roles.cache.has(`${permissionLevels.moderator}`)) {
             var csvData = [];
             var id;
 
@@ -34,33 +35,32 @@ module.exports = {
                         return a[0] - b[0];
                     });
 
-                    var link = "";
-                    
-                    if (Number(args[0]) < Number(id)) {
-                        if (args[1] == "link") {
-                            for (i = 0; i <= args.length-1; i++) {
-                                if (args[i].includes("https://") || args[i].includes("http://")) {
-                                    link = link + "> " + "<" + args[i] + ">" + "\n";
-                                }
-                                console.log(csvData)
-                                console.log(args)
-                                csvData[args[0]][2] = link;
-                            }
-                        } else {
-                            csvData[args[0]][1] = `⁃ ${args.slice(1).join(" ")}`;
-                        }
+                   try {
+
+                    if (Number(args[0]) < Number(id) && Number(args[1]) < Number(id)) {                
+
+                        csvData[args[0]][0] = args[1];
+                        csvData[args[1]][0] = args[0];
+                        
 
                         fs.truncate(`${currentRecap}`, 0, function (err) {
                             if (err) throw err;
+                        })
+
+                        csvData.sort(function (a, b) {
+                            return a[0] - b[0];
                         });
 
-                        for (let i = 0; i < csvData.length; i++) {
-                            appendData(csvData[i][0], csvData[i][1], csvData[i][2], csvData[i][3])
+                     for (let i = 0; i < csvData.length; i++) {
+                        appendData(csvData[i][0], csvData[i][1], csvData[i][2], csvData[i][3])
                         }
-                        message.reply("Edits were successful!")
+                        message.reply("Swapping successful!")
 
                     } else {
                         return message.reply(`Index out of bounds : Allowed index between 0 - ${id - 1}.`)
+                    }
+                } catch (error) {
+                       console.log(error)
                     }
                 });
         }

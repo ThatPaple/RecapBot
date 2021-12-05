@@ -1,7 +1,7 @@
 const { Discord, Util } = require('discord.js');
 const fs = require('fs');
 const currentRecap = "data/currentRecap.csv";
-const { colors, recapChannelID, allowedRole } = require('../utils/config.json');
+const { colors, recapChannelID, permissionLevels } = require('../utils/config.json');
 var parse = require('csv-parse');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
@@ -14,7 +14,7 @@ module.exports = {
     argList: [],
     usage: '',
     execute: async (message, args, client) => {
-        if (message.member.roles.cache.has(`${allowedRole}`)) {
+        if (message.member.roles.cache.has(`${permissionLevels.moderator}`) || message.member.roles.cache.has(`${permissionLevels.testing}`)) {
         var csvData = [];
         fs.createReadStream(currentRecap)
             .pipe(parse({ delimiter: ',' }))

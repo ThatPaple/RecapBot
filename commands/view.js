@@ -1,7 +1,7 @@
 const { Discord, Util } = require('discord.js');
 const fs = require('fs');
 const currentRecap = "data/currentRecap.csv";
-const { colors, allowedRole } = require('../utils/config.json');
+const { colors, permissionLevels } = require('../utils/config.json');
 var parse = require('csv-parse');
 
 
@@ -14,8 +14,9 @@ module.exports = {
     argList: ['all'],
     usage: '',
     execute: (message, args, client) => {
-        if (message.member.roles.cache.has(`${allowedRole}`)) {
-        var csvData = [];
+        if (message.member.roles.cache.has(`${permissionLevels.moderator}`) || message.member.roles.cache.has(`${permissionLevels.testing}`)) {
+        try {
+            var csvData = [];
         fs.createReadStream(currentRecap)
             .pipe(parse({ delimiter: ',' }))
             .on('data', function (csvrow) {
@@ -37,12 +38,27 @@ module.exports = {
 
                 if (clean.length > 0) {
                     const chunks = Util.splitMessage(clean);
-                    message.channel.send(`**Recap Storage**`);
+                    if(args[0] == "dm"){
+                        try {
+                            message.author.send(`**Recap Storage**`);
+                            chunks.forEach((chunk, i) => message.author.send(`\`\`\`${chunk}\`\`\``))
+                            message.reply("I am currently crunching all the data and sending it your way!")
+       
+                        } catch (error) {
+                            message.reply("I cannot DM you due to your privacy settings, please use ``recap.view all`` instead!")                            
+                        }                        
+                    } else {
+                        message.channel.send(`**Recap Storage**`);
                     chunks.forEach((chunk, i) => message.channel.send(`\`\`\`${chunk}\`\`\``))
+                    }
                 } else {
                     message.reply('**There is no recap currently stored!**')
                 }
             });
+        } catch (error) {
+            message.reply("Well.. This is embarrasing. Something went wrong! Please contact Paps asap.")
+            console.log(error)
         }
+    }
     },
 };
