@@ -1,6 +1,6 @@
 {
   "name": "recapbot",
-  "version": "1.0.2",
+  "version": "3.0.0",
   "description": "Recaps simplified",
   "main": "index.js",
   "scripts": {
@@ -11,10 +11,10 @@
   "license": "MIT",
   "dependencies": {
     "ascii-table": "^0.0.9",
-    "csv-parse": "^4.16.3",
-    "csv-writer": "^1.6.0",
     "discord.js": "^13.1.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "mysql": "^2.18.1",
+    "pretty-ms": "^7.0.1"
   },
   "nodeVersion": "16.11.1"
 }

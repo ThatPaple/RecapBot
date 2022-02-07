@@ -1,12 +1,12 @@
-const { prefix } = require('../utils/config.json');
+const { prefix, permissionLevels } = require('../utils/config.json');
 const fs = require('fs')
-const bannedWords = "data/bannedWords.txt";
 
 module.exports = {
 	event: 'messageCreate',
 	run: (message, client) => {
 
 		if (!message.content.startsWith(prefix) || message.author.bot) return;
+
 		const args = message.content.slice(prefix.length).split(/ +/);
 		const commandName = args.shift().toLowerCase();
 		const command =
