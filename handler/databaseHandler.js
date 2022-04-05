@@ -3,7 +3,7 @@ let config = require('../utils/config.json');
 const { client, Discord, Util, MessageReaction } = require('discord.js');
 const nodeutility = require('util');
 var pool = require('./mysqlConnector');
-let connStat = "None";
+// let connStat = "None";
 
 function createTables() {
     pool.getConnection(function (err, connection) {
@@ -266,11 +266,11 @@ function viewRecap(state, flag, message) {
 
             if (flag == "dm") {
                 message.author.send(headerText)
-                const chunks = Util.splitMessage(recapText, { maxLength: 1999 });
-                chunks.forEach((chunk, i) => message.author.send(`\`\`\`${chunk}\`\`\``))
+                const chunks = Util.splitMessage(recapText, { maxLength: 1992 });
+                chunks.forEach((chunk, i) => message.author.send(`\`\`\`${chunk}\`\`\``), { split: true })
             } else {
                 message.channel.send(headerText)
-                const chunks = Util.splitMessage(recapText, { maxLength: 1999 });
+                const chunks = Util.splitMessage(recapText, { maxLength: 1992 });
                 chunks.forEach((chunk, i) => message.channel.send(`\`\`\`${chunk}\`\`\``), { split: true });
             }
         });
