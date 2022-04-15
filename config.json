@@ -1,0 +1,23 @@
+{
+  "token": "",
+  "prefix": "rc.",
+  "author": "thatpaple#9995",
+  "recapChannelID" : "853972236774801408",
+  "modlogChannelID" : "748136869497143457",
+  "permissionLevels" : {
+    "moderator" : "757214956411420743",
+    "botManagement" : "851957280127975454",
+    "paple" : "630473266166890517",
+    "martin" : "162894948721623041",
+    "testing" : "903430468421173289"
+  },
+  "OneYearRole" : "834474563000860693",
+  "mysql": {
+    "host": "eu02-sql.pebblehost.com",
+    "user": "customer_227396_recaps",
+    "password" : "5Mp7@I3z79RxPsWq@Q3M",
+    "database" : "customer_227396_recaps",
+    "port" : "3306",
+    "charset" : "utf8mb4"
+  }
+}
